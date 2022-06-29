@@ -1,12 +1,6 @@
-import json
 from tkinter import Button, Entry, PhotoImage, StringVar, Tk, Label
-
-def addUser(password, email, window):
-    data["email"] = email
-    data["password"] = password
-    with open("code.json", "w") as f:
-        json.dump(data, f)
-    window.destroy()
+import json
+from functions import addUser
 
 def signup():
     window = Tk()
@@ -29,14 +23,14 @@ def signup():
     inputp.place(x=160,y=90)
 
     Button(window, text="Signup", command=lambda: addUser(
-        password.get(), email.get(), window)).place(x=170, y=115)
+        data, password.get(), email.get(), window)).place(x=170, y=115)
     window.mainloop()
 try:
-    with open("code.json", "r") as f:
+    with open("data.json", "r") as f:
         data = json.load(f)
 except:
     data = {}
-    with open("code.json", "w") as f:
+    with open("data.json", "w") as f:
         json.dump(data, f)
 if len(data) == 0:
     signup()
