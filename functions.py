@@ -1,6 +1,7 @@
 import bcrypt
 import json
 import re
+
 def addUser(data, password, email, window):
     data["email"] = email
     password = password.encode('utf-8')
@@ -10,6 +11,18 @@ def addUser(data, password, email, window):
     with open("data.json", "w") as f:
         json.dump(data, f)
     window.destroy()
+
+def checkUser(data, password, email, window):
+    if email == data["email"]:
+        password = password.encode('utf-8')
+        hashed = bcrypt.hashpw(password, bcrypt.gensalt(10))
+        a = data["password"].encode('utf-8')
+        if bcrypt.checkpw(a,hashed):
+            print("authenticated")
+            window.destroy()
+
+def showpas(store,a):
+    print(store, a)
 
 def passwordStrength(password):
     p=1
@@ -32,4 +45,3 @@ def passwordStrength(password):
     if(result_4):
         p+=1
     return p
-print(passwordStrength("tfSDf$33"))
