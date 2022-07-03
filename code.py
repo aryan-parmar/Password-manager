@@ -1,7 +1,7 @@
 from tkinter import BOTTOM, LEFT, RIGHT, X, Y, Button, Canvas, Entry, Frame, PhotoImage, Scrollbar, StringVar, Tk, Label, Toplevel, ttk
 import json
 import bcrypt
-from functions import addUser, checkUser, showpas
+from functions import addUser, checkUser, showpass
 
 
 def signup():
@@ -29,36 +29,33 @@ def signup():
     window.mainloop()
 
 
-def login(ind):
-    window = Tk()
-    window.title("Login - password manager")
-    window.geometry("400x150")
-    window.resizable(False, False)
-    photo = PhotoImage(file=".//assets//icons1.png")
-    window.iconphoto(False, photo)
+def login(window,ind):
+    lWindow = Toplevel(window)
+    lWindow.title("Login - password manager")
+    lWindow.geometry("400x150")
+    lWindow.resizable(False, False)
+    photoL = PhotoImage(file=".//assets//icons1.png")
+    lWindow.iconphoto(False, photoL)
 
-    Label(window, text="Login to view password", font="12").pack()
+    Label(lWindow, text="Login to view password", font="12").pack()
 
-    Label(window, text="Email").place(x=100, y=50)
-    email = StringVar()
-    inputtxt = Entry(window, width=20, textvariable=email)
-    inputtxt.place(x=160, y=50)
+    Label(lWindow, text="Email").place(x=100, y=50)
+    emaill = StringVar()
+    inputtxtl = Entry(lWindow, width=20, textvariable=emaill)
+    inputtxtl.place(x=160, y=50)
 
-    Label(window, text="Password").place(x=100, y=90)
-    password = StringVar()
-    inputp = Entry(window, width=20, show="*", textvariable=password)
-    inputp.place(x=160, y=90)
+    Label(lWindow, text="Password").place(x=100, y=90)
+    passwordl = StringVar()
+    inputpl = Entry(lWindow, width=20, show="*", textvariable=passwordl)
+    inputpl.place(x=160, y=90)
 
-    Button(window, text="Login", command=lambda: showpass(store,a) if checkUser(
-        data, email.get(), password.get(), window) else None ).place(x=170, y=115)
+    Button(lWindow, text="Login", command=lambda: showpass(window,store,ind) if checkUser(
+        data, passwordl.get(), emaill.get(), lWindow) else None ).place(x=170, y=115)
 
-    window.mainloop()
+    lWindow.mainloop()
 
 def addPassword(store, password, app, window):
-    password = password.encode('utf-8')
-    hashed = bcrypt.hashpw(password, bcrypt.gensalt(10))
-    hashed = hashed.decode("utf-8")
-    store["password"].append(hashed)
+    store["password"].append(password)
     store["app"].append(app)
     with open("store.json", "w") as f:
         json.dump(store, f)
@@ -125,7 +122,7 @@ def main_window():
         text = StringVar(value=passwordList[i])
         password = Entry(frame2, textvariable=text, show="*")
         password.grid(row=i, column=11)
-        show = ttk.Button(frame2, image=eye, command=lambda a = i: login(a))
+        show = ttk.Button(frame2, image=eye, command=lambda a = i: login(window,a))
         show.grid(row=i, column=15)
         deleteB = ttk.Button(frame2, image=delete)
         deleteB.grid(row=i, column=17)

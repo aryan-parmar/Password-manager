@@ -1,11 +1,14 @@
+from cgitb import text
+from tkinter import Entry, Label, PhotoImage, StringVar, Toplevel
 import bcrypt
 import json
 import re
 
+salt = b'$2b$10$De948JaGOK000Rth4xSztO'
 def addUser(data, password, email, window):
     data["email"] = email
     password = password.encode('utf-8')
-    hashed = bcrypt.hashpw(password, bcrypt.gensalt(10))
+    hashed = bcrypt.hashpw(password, salt)
     hashed = hashed.decode("utf-8")
     data["password"] = hashed
     with open("data.json", "w") as f:
@@ -13,17 +16,28 @@ def addUser(data, password, email, window):
     window.destroy()
 
 def checkUser(data, password, email, window):
+    print(email == data["email"])
     if email == data["email"]:
         password = password.encode('utf-8')
-        hashed = bcrypt.hashpw(password, bcrypt.gensalt(10))
+        hashed = bcrypt.hashpw(password, salt)
         a = data["password"].encode('utf-8')
-        if bcrypt.checkpw(a,hashed):
+        if hashed==a:
             print("authenticated")
             window.destroy()
+            return True
+        else:
+            return False
 
-def showpas(store,a):
-    print(store, a)
-
+def showpass(window,store,a):
+    lWindow = Toplevel(window)
+    lWindow.title("Login - password manager")
+    lWindow.geometry("400x150")
+    lWindow.resizable(False, False)
+    photoL = PhotoImage(file=".//assets//icons1.png")
+    lWindow.iconphoto(False, photoL)
+    a = StringVar(value=store["password"][a])
+    Entry(lWindow, textvariable=a).pack()
+    lWindow.mainloop()
 def passwordStrength(password):
     p=1
     if (len(password)>=8):
