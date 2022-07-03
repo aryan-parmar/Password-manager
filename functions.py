@@ -1,8 +1,11 @@
-from cgitb import text
-from tkinter import Entry, Label, PhotoImage, StringVar, Toplevel
+
+from tkinter import Entry, PhotoImage, StringVar, Toplevel
 import bcrypt
 import json
 import re
+import string
+import random
+
 
 salt = b'$2b$10$De948JaGOK000Rth4xSztO'
 def addUser(data, password, email, window):
@@ -59,3 +62,23 @@ def passwordStrength(password):
     if(result_4):
         p+=1
     return p
+
+def generatePassword() :
+    s1 = string.ascii_lowercase
+    #print (s1)
+    s2 = string.ascii_uppercase
+    #print (s2)
+    s3 = string.digits
+    #print(s3)
+    s4 = string.punctuation
+   #print(S4) 
+    plen = 10
+    s = []
+    s.extend(list(s1))
+    s.extend(list(s2))
+    s.extend(list(s3))
+    s.extend(list(s4))
+    #print(s)
+    random.shuffle(s)
+    #return (s)
+    return ''.join(s[0:plen])
