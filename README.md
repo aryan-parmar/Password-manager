@@ -17,8 +17,14 @@ This causes users to choose memorable but weak passwords and then reuse them whi
 
 # Members
 
-* Aryan parmar (16010121137)
-* Aayushi pawar (16010121143)
-* Nikita pawar (16010121144)
+* [@Aryan parmar](https://github.com/aryan-parmar) (16010121137)
+* [@Aayushi pawar](https://github.com/Aayushi-Pawar) (16010121143)
+* [@Nikita pawar](https://github.com/Niikita07) (16010121144)
 
+# Conclusion
 
+* With the help of this project we are trying to solve the small problems faced in todays world by people where we have a password for every single apps from games,shopping,ola/uber,online streaming platforms and allmost everything.So that people can find all their passwords for various in one secured place.
+
+* We learnt many different aspects programming and what goes behind even your simle login/signup window, a very small security through hashing and many other things.
+
+* This project has taught us team coordination,time management and a lot of things. 
