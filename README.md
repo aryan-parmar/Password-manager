@@ -10,15 +10,15 @@ This causes users to choose memorable but weak passwords and then reuse them whi
 
 # Flow of code 
 
-[*] The user logs in the application through a password and username
-[*] Once in the users can save password of multiple apps and websites which will be hashed and secured, and will be retrieved and shown as output to users whenever needed.
-[*] It will also check the strength of the passwords and whether they are fulfilling the conditions for the following.
-[*] And it will also generate passwords randomly if the user is falling short of ideas.
+* The user logs in the application through a password and username
+* Once in the users can save password of multiple apps and websites which will be hashed and secured, and will be retrieved and shown as output to users whenever needed.
+* It will also check the strength of the passwords and whether they are fulfilling the conditions for the following.
+* And it will also generate passwords randomly if the user is falling short of ideas.
 
 # Members
 
-[*] Aryan parmar (16010121137)
-[*] Aayushi pawar (16010121143)
-[*] Nikita pawar (16010121144)
+* Aryan parmar (16010121137)
+* Aayushi pawar (16010121143)
+* Nikita pawar (16010121144)
 
 
