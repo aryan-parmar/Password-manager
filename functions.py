@@ -1,4 +1,3 @@
-
 from tkinter import Entry, PhotoImage, StringVar, Toplevel
 import bcrypt
 import json

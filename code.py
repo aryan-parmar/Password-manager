@@ -1,6 +1,5 @@
 from tkinter import BOTTOM, LEFT, RIGHT, X, Y, Button, Canvas, Entry, Frame, PhotoImage, Scrollbar, StringVar, Tk, Label, Toplevel, ttk
 import json
-import bcrypt
 from functions import addUser, checkUser, showpass
 
 
