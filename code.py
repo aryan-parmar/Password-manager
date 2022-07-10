@@ -28,7 +28,7 @@ def signup():
     window.mainloop()
 
 
-def login(window,ind):
+def login(window, ind):
     lWindow = Toplevel(window)
     lWindow.title("Login - password manager")
     lWindow.geometry("400x150")
@@ -48,10 +48,49 @@ def login(window,ind):
     inputpl = Entry(lWindow, width=20, show="*", textvariable=passwordl)
     inputpl.place(x=160, y=90)
 
-    Button(lWindow, text="Login", command=lambda: showpass(window,store,ind) if checkUser(
-        data, passwordl.get(), emaill.get(), lWindow) else None ).place(x=170, y=115)
+    Button(lWindow, text="Login", command=lambda: showpass(window, store, ind) if checkUser(
+        data, passwordl.get(), emaill.get(), lWindow) else None).place(x=170, y=115)
 
     lWindow.mainloop()
+def editApp(window,store, ind, app, password):
+    store["app"][ind] = app
+    store["password"][ind] = password
+    with open("store.json", "w") as f:
+        json.dump(store, f)
+    window.destroy()
+    main_window()
+def editWindow(window, store, ind):
+    window.destroy()
+    win = Tk()
+    win.title("add password - password manager")
+    win.geometry("400x150")
+    win.resizable(False, False)
+
+    Label(win, text="Add new password", font="12").pack()
+
+    Label(win, text="App").place(x=100, y=50)
+    appl = StringVar(value=store["app"][ind])
+    inputtxtl = Entry(win, width=20, textvariable=appl)
+    inputtxtl.place(x=160, y=50)
+
+    Label(win, text="Password").place(x=100, y=90)
+    passwordl = StringVar(value=store["password"][ind])
+    inputpl = Entry(win, width=20, show="*", textvariable=passwordl)
+    inputpl.place(x=160, y=90)
+
+    Button(win, text="edit", command=lambda: editApp(win,store,ind,appl.get(),passwordl.get())).place(x=170, y=115)
+
+    win.mainloop()
+
+
+def deleteApp(window, store, ind):
+    store["password"].pop(ind)
+    store["app"].pop(ind)
+    with open("store.json", "w") as f:
+        json.dump(store, f)
+    window.destroy()
+    main_window()
+
 
 def addPassword(store, password, app, window):
     store["password"].append(password)
@@ -60,6 +99,7 @@ def addPassword(store, password, app, window):
         json.dump(store, f)
     window.destroy()
     main_window()
+
 
 def addNewPasswordWindow(window):
     window.destroy()
@@ -121,11 +161,13 @@ def main_window():
         text = StringVar(value=passwordList[i])
         password = Entry(frame2, textvariable=text, show="*")
         password.grid(row=i, column=11)
-        show = ttk.Button(frame2, image=eye, command=lambda a = i: login(window,a))
+        show = ttk.Button(frame2, image=eye,
+                          command=lambda a=i: login(window, a))
         show.grid(row=i, column=15)
-        deleteB = ttk.Button(frame2, image=delete)
+        deleteB = ttk.Button(frame2, image=delete,
+                             command=lambda a=i: deleteApp(window, store, a))
         deleteB.grid(row=i, column=17)
-        editB = ttk.Button(frame2, image=edit)
+        editB = ttk.Button(frame2, image=edit,command=lambda a=i: editWindow(window, store, a))
         editB.grid(row=i, column=18)
 
     frame2.update()
@@ -136,7 +178,6 @@ def main_window():
     frame_container.pack(side=BOTTOM, fill=X, expand=True)
 
     window.mainloop()
-
 
 
 try:
@@ -150,7 +191,7 @@ try:
     with open("store.json", "r") as f:
         store = json.load(f)
 except:
-    store = {"app":[],"password":[]}
+    store = {"app": [], "password": []}
     with open("store.json", "w") as f:
         json.dump(store, f)
 if len(data) == 0:
