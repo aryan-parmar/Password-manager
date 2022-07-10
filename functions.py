@@ -1,4 +1,4 @@
-from tkinter import Entry, PhotoImage, StringVar, Toplevel
+from tkinter import Entry, PhotoImage, StringVar, Toplevel, messagebox
 import bcrypt
 import json
 import re
@@ -8,14 +8,17 @@ import random
 
 salt = b'$2b$10$De948JaGOK000Rth4xSztO'
 def addUser(data, password, email, window):
-    data["email"] = email
-    password = password.encode('utf-8')
-    hashed = bcrypt.hashpw(password, salt)
-    hashed = hashed.decode("utf-8")
-    data["password"] = hashed
-    with open("data.json", "w") as f:
-        json.dump(data, f)
-    window.destroy()
+    if emailVerifier(email):
+        data["email"] = email
+        password = password.encode('utf-8')
+        hashed = bcrypt.hashpw(password, salt)
+        hashed = hashed.decode("utf-8")
+        data["password"] = hashed
+        with open("data.json", "w") as f:
+            json.dump(data, f)
+        window.destroy()
+    else:
+        messagebox.showerror("Invalid email", "Please enter a valid email")
 
 def checkUser(data, password, email, window):
     print(email == data["email"])
@@ -40,6 +43,15 @@ def showpass(window,store,a):
     a = StringVar(value=store["password"][a])
     Entry(lWindow, textvariable=a).pack()
     lWindow.mainloop()
+
+def emailVerifier(email):
+    pattern = '^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w+$'
+    result = re.match(pattern,email)
+    if(result):
+        return True
+    else:
+        return False
+
 def passwordStrength(password):
     p=1
     if (len(password)>=8):

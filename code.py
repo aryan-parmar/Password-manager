@@ -1,6 +1,6 @@
 from tkinter import BOTTOM, LEFT, RIGHT, X, Y, Button, Canvas, Entry, Frame, PhotoImage, Scrollbar, StringVar, Tk, Label, Toplevel, ttk
 import json
-from functions import addUser, checkUser, showpass
+from functions import addUser, checkUser, showpass, emailVerifier
 
 
 def signup():
@@ -79,9 +79,7 @@ def editWindow(window, store, ind):
     inputpl.place(x=160, y=90)
 
     Button(win, text="edit", command=lambda: editApp(win,store,ind,appl.get(),passwordl.get())).place(x=170, y=115)
-
     win.mainloop()
-
 
 def deleteApp(window, store, ind):
     store["password"].pop(ind)
